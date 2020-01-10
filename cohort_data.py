@@ -88,8 +88,6 @@ def hogwarts_by_house(filename):
     [['Abbott', 'Chang', 'Creevey', 'Creevey', 'Edgecombe', 'Nott', 'Spinnet'], ['Abercrombie', 'Bell', 'Brown', 'Coote', 'Finnigan', 'Granger', 'Johnson', 'Jordan', 'Kirke', 'Longbottom', 'Macdonald', 'McDonald', 'McLaggen', 'Patil', 'Peakes', 'Potter', 'Robins', 'Sloper', 'Thomas', 'Vane', 'Weasley', 'Weasley', 'Weasley', 'Weasley', 'Weasley', 'Wood'], ['Bones', 'Branstone', 'Cauldwell', 'Diggory', 'Finch-Fletchley', 'Macmillan', 'Madley', 'Midgeon', 'Smith', 'Whitby', 'Zeller'], ['Ackerley', 'Belby', 'Boot', 'Brocklehurst', 'Carmichael', 'Clearwater', 'Corner', 'Davies', 'Goldstein', 'Lovegood', 'Patil', 'Quirke', 'Turpin'], ['Baddock', 'Bletchley', 'Bullstrode', 'Crabbe', 'Flint', 'Goyle', 'Higgs', 'Malfoy', 'Parkinson', 'Pritchard', 'Pucey', 'Zabini'], ['Baron', 'Friar', 'Lady', 'Nick'], ['Flitwick', 'McGonagall', 'Snape', 'Sprout']]
 
     """
-
-    all_hogwarts = []
     dumbledores_army = []
     gryffindor = []
     hufflepuff = []
@@ -97,6 +95,37 @@ def hogwarts_by_house(filename):
     slytherin = []
     ghosts = []
     instructors = []
+
+    data = open(filename)
+    for line in data:
+        line = line.rstrip()
+        info = line.split("|")
+        last_name = info[1]
+        house = info[2]
+        cohort = info[-1]
+        if cohort == "I":
+            instructors.append(last_name) 
+        elif cohort == "G":
+            ghosts.append(last_name) 
+        else:
+            if house == "Gryffindor":
+                gryffindor.append(last_name)
+            elif house == "Hufflepuff":
+                hufflepuff.append(last_name)
+            elif house == "Ravenclaw":
+                ravenclaw.append(last_name)
+            elif house == "Slytherin":
+                slytherin.append(last_name)
+            elif house == "Dumbledore's Army":
+                dumbledores_army.append(last_name)
+    all_hogwarts = []
+    all_hogwarts.append(sorted(dumbledores_army))
+    all_hogwarts.append(sorted(gryffindor))
+    all_hogwarts.append(sorted(hufflepuff))
+    all_hogwarts.append(sorted(ravenclaw))
+    all_hogwarts.append(sorted(slytherin))
+    all_hogwarts.append(sorted(ghosts))
+    all_hogwarts.append(sorted(instructors))
 
     # Code goes here
 
@@ -119,6 +148,17 @@ def all_students_tuple_list(filename):
     student_list = []
 
     # Code goes here
+    data = open(filename)
+    for line in data:
+        line = line.rstrip()
+        info = line.split("|")
+        full_name = info[0] + " " + info[1]
+        house = info[2]
+        advisor = info[3]
+        cohort = info[4]
+        if cohort != "I" and cohort != "G":
+            student_list.append((full_name, house, advisor, cohort))
+
 
     return student_list
 
